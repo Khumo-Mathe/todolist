@@ -1,27 +1,20 @@
 {% extends 'tasks/base.html' %}
 
 {% block content %}
-<h1>Your task list</h1>
-
+<h1>Your Todo List</h1>
 <form method="POST" action="{% url 'add_task' %}">
-  {% csrf_token %}
-  {{ form.title }}
-  <button type="submit">Add Task</button>
+    {% csrf_token %}
+    {{ form.title }}
+    <button type="submit">Add Task</button>
 </form>
-
 <ul>
-  {% for task in tasks %}
-  <li>
-    {% if task.complete %}
-      <del>{{ task.title }}</del>
-    {% else %}
-      {{ task.title }}
-    {% endif %}
-    <a href="{% url 'complete_task' task.id %}">✓</a>
-    <a href="{% url 'delete_task' task.id %}">🗑</a>
-  </li>
-  {% endfor %}
+    {% for task in tasks %}
+        <li>
+            {% if task.complete %}<s>{{ task.title }}</s>{% else %}{{ task.title }}{% endif %}
+            <a href="{% url 'complete_task' task.id %}">[✓]</a>
+            <a href="{% url 'delete_task' task.id %}">[x]</a>
+        </li>
+    {% endfor %}
 </ul>
-
 <a href="{% url 'logout' %}">Logout</a>
 {% endblock %}
